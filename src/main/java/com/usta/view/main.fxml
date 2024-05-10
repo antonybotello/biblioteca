@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.usta.controller.MainController">
+    <top>
+        <MenuBar>
+            <menus>
+                <Menu text="Archivo">
+                    <items>
+                        <MenuItem text="Salir" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+            <Tab text="Bienvenido!">
+            <VBox alignment="CENTER" spacing="20">
+                <Label style="-fx-font-size: 24px; -fx-font-weight: bold;" text="¡Bienvenido al Sistema de Bibliotecas!" />
+                <Label text="Este sistema te permite gestionar autores, libros, préstamos y usuarios." />
+            </VBox>
+            </Tab>
+                <Tab text="Autores">
+               <content>
+                  <HBox fx:id="autorRoot" prefHeight="100.0" prefWidth="200.0" />
+               </content></Tab>
+                <Tab text="Libros">
+                     <content>
+                  <HBox fx:id="libroRoot" prefHeight="100.0" prefWidth="200.0" />
+               </content>
+                </Tab>
+                <Tab text="Préstamos">
+                    <content>
+                  <HBox fx:id="prestamoRoot" prefHeight="100.0" prefWidth="200.0" />
+               </content>
+                </Tab>
+                <Tab text="Usuarios">
+                    <content>
+                  <HBox fx:id="usuarioRoot" prefHeight="100.0" prefWidth="200.0" />
+               </content>
+                </Tab>
+                
+               
+            </tabs>
+        </TabPane>
+    </center>
+    <bottom>
+        
+    </bottom>
+   <bottom>
+      <Label fx:id="infoLbl" prefHeight="27.0" prefWidth="367.0" textFill="#909090" BorderPane.alignment="CENTER_LEFT">
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </Label>
+   </bottom>
+</BorderPane>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="tu.paquete.MainController">
+    <top>
+        <MenuBar>
+            <menus>
+                <Menu text="Archivo">
+                    <items>
+                        <MenuItem text="Salir"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+            <Tab text="Bienvenido!">
+            <VBox alignment="CENTER" spacing="20">
+                <Label text="¡Bienvenido al Sistema de Bibliotecas!" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+                <Label text="Este sistema te permite gestionar autores, libros, préstamos y usuarios." />
+            </VBox>
+            </Tab>
+                <Tab text="Autores">
+                    <!-- Contenido para la gestión de autores -->
+                    <AnchorPane prefWidth="600" prefHeight="400">
+                        <!-- Aquí puedes agregar elementos como TableView, botones, etc. -->
+                    </AnchorPane>
+                </Tab>
+                <Tab text="Libros">
+                    <!-- Contenido para la gestión de libros -->
+                    <AnchorPane prefWidth="600" prefHeight="400">
+                        <!-- Aquí puedes agregar elementos como TableView, botones, etc. -->
+                    </AnchorPane>
+                </Tab>
+                <Tab text="Préstamos">
+                    <!-- Contenido para la gestión de préstamos -->
+                    <AnchorPane prefWidth="600" prefHeight="400">
+                        <!-- Aquí puedes agregar elementos como TableView, botones, etc. -->
+                    </AnchorPane>
+                </Tab>
+                <Tab text="Usuarios">
+                    <!-- Contenido para la gestión de usuarios -->
+                    <AnchorPane prefWidth="600" prefHeight="400">
+                        <!-- Aquí puedes agregar elementos como TableView, botones, etc. -->
+                    </AnchorPane>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+    <bottom>
+        
+    </bottom>
+</BorderPane>
