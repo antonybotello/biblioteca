@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.usta.dao.Autor.AutorDAO;
+import com.usta.dao.baseDAO;
 import com.usta.dao.Autor.AutorDAOImpl;
 import com.usta.model.Autor;
 import javafx.collections.ObservableList;
@@ -20,11 +20,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import com.usta.model.Pais;
 import com.usta.utils.ConexionMySQL;
+import com.usta.utils.ConexionPOSTGRES;
 
 public class AutorController extends BaseController{
 
-    private AutorDAO autorDAO;
-    private Connection conexion;
     private Autor autorSeleccionado;
     private ObservableList<Autor> autoresData = FXCollections.observableArrayList(); // La lista observable de autores}
     private FilteredList<Autor> autoresFiltrados; // Lista filtrada de autores
@@ -73,17 +72,16 @@ public class AutorController extends BaseController{
     @FXML
     private ComboBox<Pais> paisCBx;
 
-    public AutorController() {
-        
-    }
+  
 
-    public AutorController(ObservableList<Autor> autoresData) {
-        this.autoresData = autoresData;
+    public AutorController() {
+        super(); // Llama al constructor de la clase base para inicializar autoresData
         this.autoresFiltrados = new FilteredList<>(autoresData, p -> true);
 
     }
 
     public void initialize() {
+        
         paisCBx.getItems().addAll(Pais.values());
         // Configurar las celdas de la tabla
         nombreCol.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -148,8 +146,7 @@ public class AutorController extends BaseController{
 
         limpiarCampos();
 
-        cerrarConexion();
-
+       
     }
 
     public void editarPaisOn(){

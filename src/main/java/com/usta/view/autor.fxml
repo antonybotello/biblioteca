@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<HBox alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox alignment="CENTER" spacing="10.0">
           <GridPane alignment="CENTER" hgap="10" vgap="10">
@@ -35,15 +35,15 @@
               </rowConstraints>
               
               <Label text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-              <TextField fx:id="nombreField" text="pipe" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+              <TextField fx:id="nombreField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
               
               <Label text="Apellido:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-              <TextField fx:id="apellidoField" text="perez" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+              <TextField fx:id="apellidoField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
               
               <Label text="Nacionalidad:" GridPane.rowIndex="2" />
               
               <Label text="Año de Nacimiento:" GridPane.rowIndex="3" />
-              <TextField fx:id="anioNacimientoField" text="1998" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+              <TextField fx:id="anioNacimientoField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="4">
                <children>
                     
@@ -52,7 +52,7 @@
                </children>
             </AnchorPane>
             <Button fx:id="cancelarAutorBtn" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" visible="false" GridPane.rowIndex="4" />
-            <ComboBox fx:id="paisCBx" editable="true" onKeyReleased="#filtrarPaises" onMouseClicked="#editarPaisOn" onMouseExited="#editarPaisOff" prefWidth="150.0" promptText="Seleccionar..." GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <ComboBox fx:id="paisCBx" onKeyReleased="#filtrarPaises" onMouseClicked="#editarPaisOn" onMouseExited="#editarPaisOff" prefWidth="150.0" promptText="Seleccionar..." GridPane.columnIndex="1" GridPane.rowIndex="2" />
           </GridPane>
          <HBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="500.0" spacing="20.0">
             <children>

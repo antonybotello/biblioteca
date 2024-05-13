@@ -4,12 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConexionMySQL {
+public class ConexionPOSTGRES {
     // URL de la base de datos PostgreSQL
-    
-    private static final String URL = "jdbc:mysql://localhost:3306/biblioteca_bd";
-    private static final String USERNAME = "root"; // Nombre de usuario de la base de datos
-    private static final String PASSWORD = "root"; // Contraseña de la base de datos
+    private static final String URL = "jdbc:postgresql://localhost:5432/biblioteca_bd";
+    private static final String USERNAME = "postgres"; // Nombre de usuario de la base de datos
+    private static final String PASSWORD = "1234"; // Contraseña de la base de datos
     private static Connection conexion = null; // Instancia única de la conexión
 
     // Método privado para crear la conexión si no existe

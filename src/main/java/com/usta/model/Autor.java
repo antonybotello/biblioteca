@@ -1,7 +1,6 @@
 package com.usta.model;
 
 public class Autor {
-    private int id;
     private String nombre;
     private String apellido;
     private Pais nacionalidad;
@@ -10,14 +9,7 @@ public class Autor {
     public Autor() {
     }
 
-    public Autor(int id, String nombre, String apellido, Pais nacionalidad, int anioNacimiento) {
-        this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.nacionalidad = nacionalidad;
-        this.anioNacimiento = anioNacimiento;
-    }
-
+   
     public Autor(String nombre, String apellido, Pais nacionalidad, int anioNacimiento) {
         this.nombre = nombre;
         this.apellido = apellido;
@@ -62,12 +54,5 @@ public class Autor {
         return nombre + " " + apellido;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
 }

@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.usta.dao.Autor.AutorDAO;
+import com.usta.dao.baseDAO;
 import com.usta.dao.Autor.AutorDAOImpl;
 import com.usta.model.Autor;
 import com.usta.model.Libro;
@@ -19,8 +19,6 @@ import javafx.scene.control.TextField;
 
 public class LibroController extends BaseController {
 
-    private AutorDAO autorDAO;
-    private Connection conexion;
 
     @FXML
     private TextField tituloField;
@@ -38,11 +36,11 @@ public class LibroController extends BaseController {
 
 
     public LibroController() {
+        super();
     }
 
     public void initialize() {
-         abrirConexion();
-        this.autorDAO = new AutorDAOImpl(conexion);
+        super.abrirConexion();
         // Configurar ComboBox de autores
         cargarDatosAutores(autoresData);
         autorCBx.getItems().setAll(autoresData);
