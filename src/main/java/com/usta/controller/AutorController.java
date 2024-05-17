@@ -22,7 +22,7 @@ import com.usta.model.Pais;
 import com.usta.utils.ConexionMySQL;
 import com.usta.utils.ConexionPOSTGRES;
 
-public class AutorController extends BaseController{
+public class AutorController extends BaseController {
 
     private Autor autorSeleccionado;
     private ObservableList<Autor> autoresData = FXCollections.observableArrayList(); // La lista observable de autores}
@@ -72,8 +72,6 @@ public class AutorController extends BaseController{
     @FXML
     private ComboBox<Pais> paisCBx;
 
-  
-
     public AutorController() {
         super(); // Llama al constructor de la clase base para inicializar autoresData
         this.autoresFiltrados = new FilteredList<>(autoresData, p -> true);
@@ -81,7 +79,7 @@ public class AutorController extends BaseController{
     }
 
     public void initialize() {
-        
+
         paisCBx.getItems().addAll(Pais.values());
         // Configurar las celdas de la tabla
         nombreCol.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -93,7 +91,6 @@ public class AutorController extends BaseController{
         autoresTable.setItems(autoresData);
     }
 
-    
     @FXML
     public void filtrarPaises() {
         String filtro = paisCBx.getEditor().getText().toLowerCase();
@@ -134,8 +131,7 @@ public class AutorController extends BaseController{
         String nombre = nombreField.getText();
         String apellido = apellidoField.getText();
         System.out.println(paisCBx.getValue());
-        Pais nacionalidad = paisCBx.getValue();;
-      
+        Pais nacionalidad = paisCBx.getValue();
         int anioNacimiento = Integer.parseInt(anioNacimientoField.getText());
 
         Autor nuevoAutor = new Autor(nombre, apellido, nacionalidad, anioNacimiento);
@@ -144,18 +140,17 @@ public class AutorController extends BaseController{
 
         actualizarTabla();
 
-        limpiarCampos();
 
-       
     }
 
-    public void editarPaisOn(){
+    public void editarPaisOn() {
         paisCBx.setEditable(true);
     }
-    public void editarPaisOff(){
+
+    public void editarPaisOff() {
         paisCBx.setEditable(false);
     }
-   
+
     public void eliminarAutor(Autor autor) {
         autoresData.remove(autor);
     }
@@ -186,14 +181,24 @@ public class AutorController extends BaseController{
 
     @FXML
     public void editarAutor() {
-        autoresData.remove(autorSeleccionado);
-        agregarAutor();
-        cancelar();
+        String nombre = nombreField.getText();
+        String apellido = apellidoField.getText();
+        Pais nacionalidad = paisCBx.getValue();
+        int anioNacimiento = Integer.parseInt(anioNacimientoField.getText());
+        autorSeleccionado.setNombre(nombre);
+        autorSeleccionado.setApellido(apellido);
+        autorSeleccionado.setNacionalidad(nacionalidad);
+        autorSeleccionado.setAnioNacimiento(anioNacimiento);
+        autorDAO.actualizar(autorSeleccionado);
+        super.cargarDatosAutores(autoresData);
+        
+        actualizarTabla();
     }
 
     public void actualizarTabla() {
         System.out.println("Contenido de autoresData: " + autoresData);
         autoresTable.setItems(autoresData);
+        limpiarCampos();
 
     }
 

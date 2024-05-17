@@ -51,6 +51,7 @@ public class AutorDAOImpl implements baseDAO<Autor> {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     Autor autor = new Autor();
+                    autor.setId(resultSet.getInt("id"));
                     autor.setNombre(resultSet.getString("nombre"));
                     autor.setApellido(resultSet.getString("apellido"));
                     autor.setNacionalidad(Pais.valueOf(resultSet.getString("nacionalidad").toUpperCase()));
@@ -73,6 +74,7 @@ public class AutorDAOImpl implements baseDAO<Autor> {
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 Autor autor = new Autor();
+                autor.setId(resultSet.getInt("id"));
                 autor.setNombre(resultSet.getString("nombre"));
                 autor.setApellido(resultSet.getString("apellido"));
                 autor.setNacionalidad(Pais.valueOf(resultSet.getString("nacionalidad").toUpperCase()));
@@ -94,6 +96,7 @@ public class AutorDAOImpl implements baseDAO<Autor> {
             statement.setString(2, autor.getApellido());
             statement.setString(3, autor.getNacionalidad().toString());
             statement.setInt(4, autor.getAnioNacimiento());
+            statement.setInt(5,autor.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

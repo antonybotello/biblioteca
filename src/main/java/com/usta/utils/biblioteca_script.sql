@@ -10,7 +10,7 @@ CREATE TABLE Autor (
     nombre VARCHAR(255) NOT NULL,
     apellido VARCHAR(255) NOT NULL,
     nacionalidad VARCHAR(255) NOT NULL,
-    anioNacimiento INT NOT NULL
+    anio_nacimiento INT NOT NULL
 );
 
 -- Crear la tabla Libro

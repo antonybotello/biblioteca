@@ -1,6 +1,7 @@
 package com.usta.model;
 
 public class Autor {
+    private int id;
     private String nombre;
     private String apellido;
     private Pais nacionalidad;
@@ -51,7 +52,17 @@ public class Autor {
 
     @Override
     public String toString() {
-        return nombre + " " + apellido;
+        return nombre + " " + apellido+" "+ id;
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+
+    public void setId(int id) {
+        this.id = id;
     }
 
 
