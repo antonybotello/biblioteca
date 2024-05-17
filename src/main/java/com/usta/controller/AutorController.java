@@ -17,6 +17,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import com.usta.model.Pais;
 import com.usta.utils.ConexionMySQL;
@@ -137,10 +138,17 @@ public class AutorController extends BaseController {
         Autor nuevoAutor = new Autor(nombre, apellido, nacionalidad, anioNacimiento);
         autorDAO.insertar(nuevoAutor);
         autoresData.add(nuevoAutor);
-
+        dialogoExito("se ha agregado el autor de manera exitosa");
         actualizarTabla();
 
+    }
 
+    @FXML
+    public void dialogoExito(String msg) {
+        var dialog = new TextInputDialog("Exito!");
+        dialog.setTitle("Exito al agregar");
+        dialog.setHeaderText(msg);
+        dialog.showAndWait();
     }
 
     public void editarPaisOn() {
@@ -191,7 +199,7 @@ public class AutorController extends BaseController {
         autorSeleccionado.setAnioNacimiento(anioNacimiento);
         autorDAO.actualizar(autorSeleccionado);
         super.cargarDatosAutores(autoresData);
-        
+
         actualizarTabla();
     }
 

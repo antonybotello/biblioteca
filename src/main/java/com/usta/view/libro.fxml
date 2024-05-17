@@ -48,7 +48,7 @@
             <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="5">
                <children>
                     
-                                <Button fx:id="agregarAutorBtn" text="Agregar Libro" />
+                                <Button fx:id="agregarAutorBtn" onAction="#guardarLibro" text="Agregar Libro" />
                   <Button fx:id="editarAutorBtn" prefHeight="25.0" prefWidth="92.0" text="Editar Libro" visible="false" />
                </children>
             </AnchorPane>
