@@ -20,8 +20,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import com.usta.model.Pais;
-import com.usta.utils.ConexionMySQL;
-import com.usta.utils.ConexionPOSTGRES;
 
 public class AutorController extends BaseController {
 
