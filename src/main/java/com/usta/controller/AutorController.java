@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -77,8 +78,19 @@ public class AutorController extends BaseController {
 
     }
 
-    public void initialize() {
+    public void ventana() {
+        // Crear una ventana emergente de información
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Información");
+        alert.setHeaderText("Este es un mensaje de información");
+        alert.setContentText("Bienvenido a la ventana emergente de información.");
 
+        // Mostrar la ventana emergente y esperar a que el usuario la cierre
+        alert.showAndWait();
+    }
+
+    public void initialize() {
+        ventana();
         paisCBx.getItems().addAll(Pais.values());
         // Configurar las celdas de la tabla
         nombreCol.setCellValueFactory(new PropertyValueFactory<>("nombre"));
