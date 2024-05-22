@@ -6,9 +6,9 @@ import java.sql.SQLException;
 
 public class ConexionPOSTGRES {
     // URL de la base de datos PostgreSQL
-    private static final String URL = "jdbc:postgresql://localhost:5433/biblioteca_bd";
+    private static final String URL = "jdbc:postgresql://localhost:5432/biblioteca_bd";
     private static final String USERNAME = "postgres"; // Nombre de usuario de la base de datos
-    private static final String PASSWORD = "123456"; // Contraseña de la base de datos
+    private static final String PASSWORD = "1234"; // Contraseña de la base de datos
     private static Connection conexion = null; // Instancia única de la conexión
 
     // Método privado para crear la conexión si no existe
