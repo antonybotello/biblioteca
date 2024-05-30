@@ -1,9 +1,15 @@
 package com.usta.controller;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import com.usta.dao.baseDAO;
 import com.usta.dao.Autor.AutorDAOImpl;
 import com.usta.model.Autor;
@@ -15,22 +21,38 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
+import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import java.awt.image.BufferedImage;
+
 import com.usta.model.Pais;
 
 public class AutorController extends BaseController {
-
+    FileOutputStream salida;
     private Autor autorSeleccionado;
     private ObservableList<Autor> autoresData = FXCollections.observableArrayList(); // La lista observable de autores}
     private FilteredList<Autor> autoresFiltrados; // Lista filtrada de autores
 
     @FXML
     private TableView<Autor> autoresTable; // La tabla de autores en la interfaz
-
+    @FXML
+    private Label urlLbl;
+    @FXML
+    private ImageView fotoImgV;
+    File archivoFoto;
     // ------------------------- Campos de Texto ------------//
     @FXML
     private TextField nombreField;
@@ -40,9 +62,13 @@ public class AutorController extends BaseController {
     private TextField nacionalidadField;
     @FXML
     private TextField anioNacimientoField;
+    @FXML
+    private TextField documentoField;
     // ------------------------------------------------------//
 
     // ------------------------- Checks de filtro ------------//
+    @FXML
+    private CheckBox documentoChk;
     @FXML
     private CheckBox nombreChk;
     @FXML
@@ -53,6 +79,8 @@ public class AutorController extends BaseController {
     private CheckBox anioNacimientoChk;
     // ------------------------------------------------------//
     @FXML
+    private TableColumn<Autor, String> documentoCol;
+    @FXML
     private TableColumn<Autor, String> nombreCol;
     @FXML
     private TableColumn<Autor, String> apellidoCol;
@@ -60,6 +88,9 @@ public class AutorController extends BaseController {
     private TableColumn<Autor, Pais> nacionalidadCol;
     @FXML
     private TableColumn<Autor, Integer> anioNacimientoCol;
+    @FXML
+    private TableColumn<Autor, String> fotoCol;
+
     @FXML
     private Button editarAutorBtn;
     @FXML
@@ -90,13 +121,39 @@ public class AutorController extends BaseController {
     }
 
     public void initialize() {
-        ventana();
         paisCBx.getItems().addAll(Pais.values());
         // Configurar las celdas de la tabla
+        documentoCol.setCellValueFactory(new PropertyValueFactory<>("documento"));
+
         nombreCol.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         apellidoCol.setCellValueFactory(new PropertyValueFactory<>("apellido"));
         nacionalidadCol.setCellValueFactory(new PropertyValueFactory<>("nacionalidad"));
         anioNacimientoCol.setCellValueFactory(new PropertyValueFactory<>("anioNacimiento"));
+        fotoCol.setCellValueFactory(new PropertyValueFactory<>("foto"));
+        fotoCol.setCellFactory(param -> new TableCell<>() {
+            private final ImageView imageView = new ImageView();
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (item == null || empty) {
+                    setGraphic(null);
+                } else {
+                    File file = new File(item);
+                    Image image;
+                    if (file.exists()) {
+                        image = new Image(file.toURI().toString());
+                    } else {
+                        image = new Image(new File("src\\main\\java\\com\\usta\\view\\img\\usuarios\\default-user.jpg")
+                                .toURI().toString());
+                    }
+                    imageView.setImage(image);
+                    imageView.setFitWidth(50);
+                    imageView.setFitHeight(50);
+                    setGraphic(imageView);
+                }
+            }
+        });
         cargarDatosAutores(autoresData);
         // Establecer los datos en la tabla
         autoresTable.setItems(autoresData);
@@ -112,26 +169,29 @@ public class AutorController extends BaseController {
 
     @FXML
     public void filtrarAutores() {
+
+        String filtroTexto = filtroTxt.getText().toLowerCase();
         if (autoresFiltrados == null) {
             autoresFiltrados = new FilteredList<>(autoresData, p -> true);
         }
-        String filtroTexto = filtroTxt.getText().toLowerCase();
-
         autoresFiltrados.setPredicate(autor -> {
             // Si el filtro está vacío, mostrar todos los elementos
             if (filtroTexto == null || filtroTexto.isEmpty()) {
                 return true;
             }
-
-            boolean nombreMatch = nombreChk.isSelected() && autor.getNombre().toLowerCase().contains(filtroTexto);
-            boolean apellidoMatch = apellidoChk.isSelected() && autor.getApellido().toLowerCase().contains(filtroTexto);
+            boolean documentoMatch = documentoChk.isSelected()
+                    && autor.getDocumento().toLowerCase().contains(filtroTexto);
+            boolean nombreMatch = nombreChk.isSelected()
+                    && autor.getNombre().toLowerCase().contains(filtroTexto);
+            boolean apellidoMatch = apellidoChk.isSelected()
+                    && autor.getApellido().toLowerCase().contains(filtroTexto);
             boolean nacionalidadMatch = nacionalidadChk.isSelected()
                     && autor.getNacionalidad().toString().toLowerCase().contains(filtroTexto);
             boolean anioNacimientoMatch = anioNacimientoChk.isSelected()
                     && String.valueOf(autor.getAnioNacimiento()).contains(filtroTexto);
 
             // Verificar si el autor coincide con alguno de los campos seleccionados
-            return nombreMatch || apellidoMatch || nacionalidadMatch || anioNacimientoMatch;
+            return documentoMatch || nombreMatch || apellidoMatch || nacionalidadMatch || anioNacimientoMatch;
         });
 
         autoresTable.setItems(autoresFiltrados);
@@ -141,24 +201,76 @@ public class AutorController extends BaseController {
     public void agregarAutor() {
         String nombre = nombreField.getText();
         String apellido = apellidoField.getText();
-        System.out.println(paisCBx.getValue());
         Pais nacionalidad = paisCBx.getValue();
         int anioNacimiento = Integer.parseInt(anioNacimientoField.getText());
+        String documento = documentoField.getText();
+        String foto = "src\\main\\java\\com\\usta\\view\\img\\usuarios\\" + documento + ".jpg";
+        Autor nuevoAutor;
+        if (fotoImgV.getImage() != null) {
+            nuevoAutor = new Autor(nombre, apellido, nacionalidad, anioNacimiento, documento, foto);
+            guardarImagen(convertirImagenABytes());
+        } else {
 
-        Autor nuevoAutor = new Autor(nombre, apellido, nacionalidad, anioNacimiento);
+            nuevoAutor = new Autor(nombre, apellido, nacionalidad, anioNacimiento, documento);
+        }
+
         autorDAO.insertar(nuevoAutor);
         autoresData.add(nuevoAutor);
-        dialogoExito("se ha agregado el autor de manera exitosa");
+
         actualizarTabla();
 
     }
 
     @FXML
-    public void dialogoExito(String msg) {
-        var dialog = new TextInputDialog("Exito!");
-        dialog.setTitle("Exito al agregar");
-        dialog.setHeaderText(msg);
-        dialog.showAndWait();
+    public void agregarFoto() {
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Subir Imagen");
+        fc.getExtensionFilters().add(new ExtensionFilter("Imágenes", "*.jpg"));
+        archivoFoto = fc.showOpenDialog(null);
+
+        if (archivoFoto != null) {
+            urlLbl.setText("" + archivoFoto.getAbsolutePath());
+            Image image = new Image(archivoFoto.toURI().toString());
+            fotoImgV.setImage(image);
+        }
+
+    }
+
+    /* Guardar imagen */
+    public String guardarImagen(byte[] bytesImg) {
+
+        String respuesta = null;
+        try {
+            salida = new FileOutputStream(
+                    new File("src\\main\\java\\com\\usta\\view\\img\\usuarios\\" + documentoField.getText() + ".jpg"));
+            salida.write(bytesImg);
+            respuesta = "La imagen se guardo con exito.";
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return respuesta;
+    }
+
+    public byte[] convertirImagenABytes() {
+
+        // Inicializar el arreglo de bytes
+        byte[] bytesImg = new byte[(int) archivoFoto.length()];
+
+        try {
+            // Crear un flujo de entrada para leer el archivo
+            FileInputStream fis = new FileInputStream(archivoFoto);
+
+            // Leer el contenido del archivo en el arreglo de bytes
+            fis.read(bytesImg);
+
+            // Cerrar el flujo de entrada
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Devolver el arreglo de bytes
+        return bytesImg;
     }
 
     public void editarPaisOn() {
@@ -177,10 +289,22 @@ public class AutorController extends BaseController {
     public void cargarEditarAutor() {
         autorSeleccionado = autoresTable.getSelectionModel().getSelectedItem();
         if (autorSeleccionado != null) {
+            documentoField.setText(autorSeleccionado.getDocumento());
+
             nombreField.setText(autorSeleccionado.getNombre());
             apellidoField.setText(autorSeleccionado.getApellido());
             paisCBx.setValue(autorSeleccionado.getNacionalidad());
             anioNacimientoField.setText(String.valueOf(autorSeleccionado.getAnioNacimiento()));
+            // Cargar la imagen del autor si existe
+            File file = new File(autorSeleccionado.getFoto() != null ? autorSeleccionado.getFoto()
+                    : "src\\main\\java\\com\\usta\\view\\img\\usuarios\\default-user.jpg");
+            Image image;
+            if (file.exists()) {
+                image = new Image(file.toURI().toString());
+            } else {
+                image = new Image(getClass().getResourceAsStream("/com/usta/view/img/usuarios/default-user.jpg"));
+            }
+            fotoImgV.setImage(image);
         }
         editarAutorBtn.setVisible(true);
         agregarAutorBtn.setVisible(false);
@@ -207,14 +331,19 @@ public class AutorController extends BaseController {
         autorSeleccionado.setApellido(apellido);
         autorSeleccionado.setNacionalidad(nacionalidad);
         autorSeleccionado.setAnioNacimiento(anioNacimiento);
+        if (fotoImgV.getImage() != null) {
+            String foto = "src\\main\\java\\com\\usta\\view\\img\\usuarios\\" + documentoField.getText() + ".jpg";
+            autorSeleccionado.setFoto(foto);
+            guardarImagen(convertirImagenABytes());
+        }
         autorDAO.actualizar(autorSeleccionado);
+
         super.cargarDatosAutores(autoresData);
 
         actualizarTabla();
     }
 
     public void actualizarTabla() {
-        System.out.println("Contenido de autoresData: " + autoresData);
         autoresTable.setItems(autoresData);
         limpiarCampos();
 
@@ -225,6 +354,9 @@ public class AutorController extends BaseController {
         apellidoField.clear();
         paisCBx.getSelectionModel().clearSelection();
         anioNacimientoField.clear();
+        documentoField.clear();
+        fotoImgV.setImage(null);
+        urlLbl.setText("Seleccione su foto");
     }
 
     public void limpiarTabla() {

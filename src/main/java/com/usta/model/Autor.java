@@ -1,22 +1,40 @@
 package com.usta.model;
 
+import javafx.scene.control.RadioButton;
+
 public class Autor {
     private int id;
     private String nombre;
     private String apellido;
     private Pais nacionalidad;
     private int anioNacimiento;
+    private String documento;
+    private String foto;
 
     public Autor() {
     }
 
    
-    public Autor(String nombre, String apellido, Pais nacionalidad, int anioNacimiento) {
+    public Autor(String nombre, String apellido, Pais nacionalidad, int anioNacimiento, String documento) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.nacionalidad = nacionalidad;
         this.anioNacimiento = anioNacimiento;
+        this.documento=documento;
     }
+
+    
+    public Autor( String nombre, String apellido, Pais nacionalidad, int anioNacimiento, String documento, String foto) {
+        
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.nacionalidad = nacionalidad;
+        this.anioNacimiento = anioNacimiento;
+        this.documento=documento;
+
+        this.foto = foto;
+    }
+
 
     public String getNombre() {
         return nombre;
@@ -63,6 +81,26 @@ public class Autor {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+
+    public String getFoto() {
+        return foto;
+    }
+
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+
+    public String getDocumento() {
+        return documento;
+    }
+
+
+    public void setDocumento(String documento) {
+        this.documento = documento;
     }
 
 

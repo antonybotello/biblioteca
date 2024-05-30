@@ -11,7 +11,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -19,51 +19,91 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="TOP_CENTER" styleClass="vbox-custom" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<HBox alignment="TOP_CENTER" prefHeight="768.0" prefWidth="820.0" styleClass="vbox-custom" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox alignment="CENTER" prefWidth="593.0" spacing="10.0">
-          <GridPane alignment="CENTER" hgap="10" vgap="10">
+      <VBox alignment="CENTER" prefHeight="768.0" prefWidth="694.0" spacing="10.0">
+          <GridPane alignment="CENTER" hgap="10" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="303.0" prefWidth="766.0" vgap="10">
               <columnConstraints>
-                  <ColumnConstraints />
-                  <ColumnConstraints />
+                  <ColumnConstraints maxWidth="326.0" minWidth="223.0" prefWidth="254.0" />
+                  <ColumnConstraints maxWidth="299.0" minWidth="134.0" prefWidth="297.0" />
+               <ColumnConstraints maxWidth="186.0" minWidth="23.0" prefWidth="45.0" />
               </columnConstraints>
               <rowConstraints>
                   <RowConstraints />
                   <RowConstraints />
                   <RowConstraints />
                   <RowConstraints />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" />
                <RowConstraints />
+               <RowConstraints minHeight="10.0" prefHeight="30.0" />
               </rowConstraints>
               
-              <Label text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-              <TextField fx:id="nombreField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+              <Label text="Nombre:" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font></Label>
+              <TextField fx:id="nombreField" GridPane.columnIndex="1" />
               
-              <Label text="Apellido:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+              <Label text="Apellido:" textFill="WHITE" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font></Label>
               <TextField fx:id="apellidoField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
               
-              <Label text="Nacionalidad:" GridPane.rowIndex="2" />
+              <Label text="Nacionalidad:" textFill="WHITE" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font></Label>
               
-              <Label text="Año de Nacimiento:" GridPane.rowIndex="3" />
+              <Label text="Año de Nacimiento:" textFill="WHITE" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font></Label>
               <TextField fx:id="anioNacimientoField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <HBox alignment="CENTER" prefHeight="42.0" prefWidth="277.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <children>
-                    
-                          <Button fx:id="agregarAutorBtn" onAction="#agregarAutor" text="Agregar Autor" />
-                  <Button fx:id="editarAutorBtn" onAction="#editarAutor" prefHeight="25.0" prefWidth="92.0" text="Editar Autor" visible="false" />
+                  <Label fx:id="urlLbl" prefHeight="42.0" prefWidth="261.0" text="Seleccione su foto" textFill="WHITE" textOverrun="LEADING_ELLIPSIS">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#agregarFoto" prefHeight="42.0" prefWidth="64.0" text="..." />
                </children>
-            </AnchorPane>
-            <Button fx:id="cancelarAutorBtn" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" visible="false" GridPane.rowIndex="4" />
-            <ComboBox fx:id="paisCBx" onKeyReleased="#filtrarPaises" onMouseClicked="#editarPaisOn" onMouseExited="#editarPaisOff" prefWidth="150.0" promptText="Seleccionar..." GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            </HBox>
+            <Button fx:id="cancelarAutorBtn" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" visible="false" GridPane.rowIndex="6" />
+            <ComboBox fx:id="paisCBx" onKeyReleased="#filtrarPaises" onMouseClicked="#editarPaisOn" onMouseExited="#editarPaisOff" prefHeight="25.0" prefWidth="296.0" promptText="Seleccionar..." GridPane.columnIndex="1" GridPane.rowIndex="2" />
+              
+                          <Button fx:id="agregarAutorBtn" onAction="#agregarAutor" text="Agregar Autor" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <HBox alignment="CENTER_LEFT" prefHeight="120.0" prefWidth="262.0" spacing="50.0" GridPane.rowIndex="5">
+               <children>
+                  <Label text="Foto:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="25.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="fotoImgV" fitHeight="120.0" fitWidth="117.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </HBox>
+            <Button fx:id="editarAutorBtn" onAction="#editarAutor" prefHeight="25.0" prefWidth="92.0" text="Editar Autor" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label text="Documento:" textFill="WHITE" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <TextField fx:id="documentoField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <styleClass>
                <String fx:value="recuadro" />
                <String fx:value="transparencia" />
             </styleClass>
+            <padding>
+               <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
           </GridPane>
          <HBox alignment="CENTER_LEFT" prefHeight="51.0" prefWidth="500.0" spacing="20.0">
             <children>
-               <Label text="Buscar:">
+               <Label text="Buscar:" textFill="#fff4f4">
                   <font>
-                     <Font size="20.0" />
+                     <Font name="System Bold" size="25.0" />
                   </font>
                </Label>
                <TextField fx:id="filtroTxt" onKeyTyped="#filtrarAutores" />
@@ -75,19 +115,22 @@
                   <content>
                      <GridPane styleClass="transparencia">
                        <columnConstraints>
+                           <ColumnConstraints hgrow="SOMETIMES" maxWidth="101.0" minWidth="10.0" prefWidth="100.0" />
                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="101.0" minWidth="10.0" prefWidth="81.0" />
                          <ColumnConstraints hgrow="SOMETIMES" maxWidth="110.0" minWidth="10.0" prefWidth="87.0" />
                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="112.0" />
                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="196.0" minWidth="10.0" prefWidth="196.0" />
                        </columnConstraints>
                        <rowConstraints>
-                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                         <RowConstraints />
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                        </rowConstraints>
                         <children>
-                           <CheckBox fx:id="nombreChk" mnemonicParsing="false" onAction="#filtrarAutores" selected="true" styleClass="transparencia" text="Nombre" />
-                           <CheckBox fx:id="apellidoChk" mnemonicParsing="false" onAction="#filtrarAutores" selected="true" text="Apellido" GridPane.columnIndex="1" />
-                           <CheckBox fx:id="nacionalidadChk" mnemonicParsing="false" onAction="#filtrarAutores" text="Nacionalidad" GridPane.columnIndex="2" />
-                           <CheckBox fx:id="anioNacimientoChk" mnemonicParsing="false" onAction="#filtrarAutores" text="Año de Nacimiento" GridPane.columnIndex="3" />
+                           <CheckBox fx:id="nombreChk" mnemonicParsing="false" onAction="#filtrarAutores" selected="true" styleClass="transparencia" text="Nombre" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                           <CheckBox fx:id="apellidoChk" mnemonicParsing="false" onAction="#filtrarAutores" selected="true" text="Apellido" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                           <CheckBox fx:id="nacionalidadChk" mnemonicParsing="false" onAction="#filtrarAutores" text="Nacionalidad" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                           <CheckBox fx:id="anioNacimientoChk" mnemonicParsing="false" onAction="#filtrarAutores" text="Año de Nacimiento" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                           <CheckBox fx:id="documentoChk" mnemonicParsing="false" onAction="#filtrarAutores" selected="true" styleClass="transparencia" text="Documento" GridPane.rowIndex="1" />
                         </children>
                      </GridPane>
                   </content>
@@ -98,6 +141,8 @@
           <!-- Tabla para visualizar los autores -->
           <TableView fx:id="autoresTable" onMouseReleased="#cargarEditarAutor" prefHeight="300" prefWidth="500" styleClass="transparencia">
               <columns>
+               <TableColumn fx:id="fotoCol" prefWidth="100" text="Foto" />
+               <TableColumn fx:id="documentoCol" prefWidth="100" text="Documento" />
                   <TableColumn fx:id="nombreCol" prefWidth="100" text="Nombre" />
                   <TableColumn fx:id="apellidoCol" prefWidth="100" text="Apellido" />
                   <TableColumn fx:id="nacionalidadCol" prefWidth="100" text="Nacionalidad" />

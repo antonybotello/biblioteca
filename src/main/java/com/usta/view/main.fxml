@@ -11,7 +11,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/13" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.usta.controller.MainController">
+<BorderPane prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.usta.controller.MainController">
+ 
     <top>
         <MenuBar>
             <menus>
@@ -34,21 +35,21 @@
             </Tab>
                 <Tab text="Autores">
                <content>
-                  <HBox fx:id="autorRoot" prefHeight="100.0" prefWidth="200.0" />
+                  <HBox fx:id="autorRoot" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" />
                </content></Tab>
                 <Tab text="Libros">
                      <content>
-                  <HBox fx:id="libroRoot" prefHeight="100.0" prefWidth="200.0" />
+                  <HBox fx:id="libroRoot" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" />
                </content>
                 </Tab>
                 <Tab text="Préstamos">
                     <content>
-                  <HBox fx:id="prestamoRoot" prefHeight="100.0" prefWidth="200.0" />
+                  <HBox fx:id="prestamoRoot" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" />
                </content>
                 </Tab>
                 <Tab text="Usuarios">
                     <content>
-                  <HBox fx:id="usuarioRoot" prefHeight="100.0" prefWidth="200.0" />
+                  <HBox fx:id="usuarioRoot" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" />
                </content>
                 </Tab>
                 

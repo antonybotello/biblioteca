@@ -17,7 +17,6 @@ public class AutorDAOImpl implements baseDAO<Autor> {
 
     public AutorDAOImpl() {
         try {
-            //this.conexion = ConexionMySQL.obtenerConexion();
             this.conexion = ConexionPOSTGRES.obtenerConexion();
         } catch (SQLException e) {
             System.err.println("Error al obtener la conexión: " + e.getMessage());
@@ -29,13 +28,14 @@ public class AutorDAOImpl implements baseDAO<Autor> {
     // Implementaciones de métodos CRUD
     @Override
     public void insertar(Autor autor) {
-        // Lógica para insertar un autor en la base de datos
-        String sql = "INSERT INTO autor (nombre, apellido, nacionalidad, anio_nacimiento) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO autor (nombre, apellido, nacionalidad, anio_nacimiento, documento, foto) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement statement = conexion.prepareStatement(sql)) {
             statement.setString(1, autor.getNombre());
             statement.setString(2, autor.getApellido());
             statement.setString(3, autor.getNacionalidad().toString());
             statement.setInt(4, autor.getAnioNacimiento());
+            statement.setString(5, autor.getDocumento());
+            statement.setString(6, autor.getFoto());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -44,7 +44,6 @@ public class AutorDAOImpl implements baseDAO<Autor> {
 
     @Override
     public Autor buscarPorId(int id) {
-        // Lógica para buscar un autor por ID en la base de datos
         String sql = "SELECT * FROM autor WHERE id = ?";
         try (PreparedStatement statement = conexion.prepareStatement(sql)) {
             statement.setInt(1, id);
@@ -56,6 +55,8 @@ public class AutorDAOImpl implements baseDAO<Autor> {
                     autor.setApellido(resultSet.getString("apellido"));
                     autor.setNacionalidad(Pais.valueOf(resultSet.getString("nacionalidad").toUpperCase()));
                     autor.setAnioNacimiento(resultSet.getInt("anio_nacimiento"));
+                    autor.setDocumento(resultSet.getString("documento"));
+                    autor.setFoto(resultSet.getString("foto"));
                     return autor;
                 }
             }
@@ -67,7 +68,6 @@ public class AutorDAOImpl implements baseDAO<Autor> {
 
     @Override
     public List<Autor> buscarTodos() {
-        // Lógica para buscar todos los autores en la base de datos
         List<Autor> autores = new ArrayList<>();
         String sql = "SELECT * FROM autor";
         try (PreparedStatement statement = conexion.prepareStatement(sql);
@@ -79,6 +79,8 @@ public class AutorDAOImpl implements baseDAO<Autor> {
                 autor.setApellido(resultSet.getString("apellido"));
                 autor.setNacionalidad(Pais.valueOf(resultSet.getString("nacionalidad").toUpperCase()));
                 autor.setAnioNacimiento(resultSet.getInt("anio_nacimiento"));
+                autor.setDocumento(resultSet.getString("documento"));
+                autor.setFoto(resultSet.getString("foto"));
                 autores.add(autor);
             }
         } catch (SQLException e) {
@@ -89,14 +91,15 @@ public class AutorDAOImpl implements baseDAO<Autor> {
 
     @Override
     public void actualizar(Autor autor) {
-        // Lógica para actualizar un autor en la base de datos
-        String sql = "UPDATE autor SET nombre = ?, apellido = ?, nacionalidad = ?, anio_nacimiento = ? WHERE id = ?";
+        String sql = "UPDATE autor SET nombre = ?, apellido = ?, nacionalidad = ?, anio_nacimiento = ?, documento = ?, foto = ? WHERE id = ?";
         try (PreparedStatement statement = conexion.prepareStatement(sql)) {
             statement.setString(1, autor.getNombre());
             statement.setString(2, autor.getApellido());
             statement.setString(3, autor.getNacionalidad().toString());
             statement.setInt(4, autor.getAnioNacimiento());
-            statement.setInt(5,autor.getId());
+            statement.setString(5, autor.getDocumento());
+            statement.setString(6, autor.getFoto());
+            statement.setInt(7, autor.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -105,7 +108,6 @@ public class AutorDAOImpl implements baseDAO<Autor> {
 
     @Override
     public void eliminar(int id) {
-        // Lógica para eliminar un autor por ID en la base de datos
         String sql = "DELETE FROM autor WHERE id = ?";
         try (PreparedStatement statement = conexion.prepareStatement(sql)) {
             statement.setInt(1, id);
